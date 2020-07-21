@@ -11,7 +11,6 @@ r = requests.get('https://brasil.io/api/dataset/covid19/caso_full/data/')
 response = r.json()
 df = pd.read_json(json.dumps(response))
      
-
 parsed_dataframe = df.drop(axis=1, columns=['next', 'previous'], index=None)
 
 cidades_latitude = []
@@ -28,7 +27,6 @@ for result in parsed_dataframe['results']:
         ultimos_casos_confirmados.append(result['last_available_confirmed'])
 
 df = pd.DataFrame({'cidade': cidades,'latitude': cidades_latitude,'longitude': cidades_longitude,'ultimos_casos_confirmados': ultimos_casos_confirmados})
-fig = go.Figure(data=go.Scattergeo(lon = df['longitude'],lat = df['latitude'],text = df['cidade'],mode = 'markers',marker_color = df['ultimos_casos_confirmados'],))
-fig.update_layout(title = 'Cidades com maior numero de casos confirmados', geo_scope='brazil',)
+fig = go.Figure(data=go.Scattergeo(lon = df['longitude'], lat = df['latitude'], text = df['cidade'], mode = 'markers', marker_color = df['ultimos_casos_confirmados']))
+fig.update_layout(title = 'Cidades com maior numero de casos confirmados', geo_scope='brazil')
 fig.show()
-
